@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nilaoda.dao.ThreadDao">
+	<!-- 查找所有帖子 -->
+	<select id="findThreads" resultType="ThreadPost">
+		select * from thread
+	</select>
+	
+	<!-- 查找某人发表的所有帖子 -->
+	<select id="findThreadsByUID" parameterType="Integer" resultType="ThreadPost">
+		select * from thread where t_uid = #{UID}
+	</select>
+	
+	<!-- 查找用户名 -->
+	<select id="findUsernameByUID" resultType="String">
+		select username from user where uid = #{UID}
+	</select>
+	
+	<!-- 查找帖子详细信息 -->
+	<select id="findThreadByTID" resultType="ThreadPost">
+		select * from thread where t_id = #{TID}
+	</select>
+	
+	<!-- 增加点击量 -->
+	<select id="addThreadClickByTID">
+		update thread 
+		  set t_clickCount = t_clickCount+1 
+		where t_id=#{TID}
+	</select>
+	
+	<!-- 搜索帖子 -->
+	<select id="searchThread" resultType="ThreadPost" parameterType="ThreadPost">
+		select * from thread where 1=1
+		  <if test="t_title!=null">
+            and t_title LIKE CONCAT(CONCAT('%', #{t_title}), '%');
+          </if>
+          <if test="t_content!=null">
+            and t_content LIKE CONCAT(CONCAT('%', #{t_content}), '%');
+          </if>
+	</select>
+	
+	<!-- 插入帖子 -->
+	<insert id="insertThread" useGeneratedKeys="true" keyProperty="t_id" parameterType="ThreadPost">
+		insert into thread(t_uid, t_title, t_content, t_time, t_image) 
+               values(#{t_uid}, #{t_title}, #{t_content}, #{t_time}, #{t_image})
+	</insert>
+	
+	<!-- 更新帖子信息 -->
+    <update id="updateThread" parameterType="ThreadPost">
+        update thread 
+        <set>
+            <if test="t_title != null">t_title=#{t_title},</if>
+            <if test="t_content != null">t_content=#{t_content}</if>
+        </set>
+        where t_id=#{t_id}
+	</update>
+	
+	<!-- 删除帖子 -->
+	<delete id="deleteThread" parameterType="ThreadPost">
+        delete from thread where t_id = #{t_id}
+    </delete>
+</mapper>

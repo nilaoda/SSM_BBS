@@ -1,0 +1,35 @@
+.hidden-xs {
+  display: block !important;
+  }
+.inline.hidden-xs {
+  display: inline !important;
+  }
+.inline-block.hidden-xs {
+  display: inline-block !important;
+  }
+tr.hidden-xs {
+  display: table-row !important;
+  }
+th.hidden-xs,
+td.hidden-xs {
+  display: table-cell !important;
+  }
+@media (max-width: 767px) {
+  .hidden-xs,
+  .inline.hidden-xs,
+  .inline-block.hidden-xs,
+  tr.hidden-xs,
+  th.hidden-xs,
+  td.hidden-xs {
+    display: none !important;
+    }
+  body{
+  	margin:0 !important;
+  }
+  .mui-container{
+    padding:0 !important;
+  }
+}
+body{
+	margin:20px;
+}

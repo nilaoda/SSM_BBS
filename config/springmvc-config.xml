@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 配置包扫描器，扫描@Controller注解的类 -->
+	<context:component-scan base-package="com.nilaoda.controller" />
+	
+	<!-- 加载注解驱动 -->
+	<mvc:annotation-driven />		
+	
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 拦截所有mvc控制器 -->
+			<mvc:mapping path="/**"/>
+			<!-- mvc:exclude-mapping是另外一种拦截，它可以在你后来的测试中对某个页面进行不拦截，这样就不用在
+				LoginInterceptor的preHandler方法里面获取不拦截的请求uri地址了(优选) -->
+			<mvc:exclude-mapping path="/login" />
+			<mvc:exclude-mapping path="/logout" />
+			<mvc:exclude-mapping path="/register" />
+			<mvc:exclude-mapping path="/login.action" />
+			<mvc:exclude-mapping path="/register.action" />
+			<mvc:exclude-mapping path="/mui-0.9.41/**" />
+			<mvc:exclude-mapping path="/layer/**" />
+			<mvc:exclude-mapping path="/upload/**" />
+			<bean class="com.nilaoda.interceptor.LoginInterceptor"></bean>			
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 配置静态资源映射，不被前端控制器拦截 -->
+	<mvc:resources location="/mui-0.9.41/" mapping="/mui-0.9.41/**" />
+	<mvc:resources location="/mui-0.9.41/css/" mapping="/mui-0.9.41/css/**" />
+	<mvc:resources location="/mui-0.9.41/js/" mapping="/mui-0.9.41/js/**" />
+	<mvc:resources location="/layer/" mapping="/layer/**" />
+	<mvc:resources location="/layer/mobile/" mapping="/layer/mobile/**" />
+	<mvc:resources location="/layer/mobile/need/" mapping="/layer/mobile/need/**" />
+	<mvc:resources location="/layer/theme/" mapping="/layer/theme/**" />
+	<mvc:resources location="/layer/theme/" mapping="/layer/theme/**" />
+	<mvc:resources location="/upload/" mapping="/upload/**" />
+	
+	<!-- 配置视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+</beans>

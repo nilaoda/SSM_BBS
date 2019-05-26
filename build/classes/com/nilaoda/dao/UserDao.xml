@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nilaoda.dao.UserDao">
+	<!-- 根据用户名和密码查找 -->
+	<select id="findUser" parameterType="String" resultType="User">
+		select * from user where username = #{username} and password = #{password}
+	</select>
+	
+	<!-- 查找所有用户 -->
+	<select id="findAllUsers" resultType="User">
+		select * from user
+	</select>
+	
+	<!-- 根据用户名查找是否存在用户 -->
+	<select id="findUserByUsername" parameterType="String" resultType="User">
+		select * from user where username = #{username}
+	</select>
+	
+	<!-- 插入用户 -->
+	<insert id="insertUser" useGeneratedKeys="true" keyProperty="uid" parameterType="User">
+		insert into user(username, password, admin) 
+               values(#{username}, #{password}, #{admin})
+	</insert>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="User">
+        delete from user where uid = #{uid}
+    </delete>
+    
+    <!-- 更新用户信息 -->
+    <update id="updateUser" parameterType="User">
+        update user 
+        <set>
+            <if test="username != null">username=#{username},</if>
+            <if test="password != null">password=#{password},</if>
+            <if test="admin != null">admin=#{admin}</if>
+        </set>
+        where uid=#{uid}
+	</update>
+</mapper>
