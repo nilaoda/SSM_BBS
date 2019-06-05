@@ -11,9 +11,6 @@ public interface ThreadDao
 
 	//查找某用户发表的帖子
 	public List<ThreadPost> findThreadsByUID(int UID);
-	
-	//查询发帖人用户名
-	public String findUsernameByUID(int UID);
 
 	//查询帖子内容
 	public ThreadPost findThreadByTID(int TID);

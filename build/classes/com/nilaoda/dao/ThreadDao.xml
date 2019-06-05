@@ -4,7 +4,7 @@
 <mapper namespace="com.nilaoda.dao.ThreadDao">
 	<!-- 查找所有帖子 -->
 	<select id="findThreads" resultType="ThreadPost">
-		select * from thread
+		select * from thread,user where thread.t_uid=user.uid
 	</select>
 	
 	<!-- 查找某人发表的所有帖子 -->
@@ -12,14 +12,9 @@
 		select * from thread where t_uid = #{UID}
 	</select>
 	
-	<!-- 查找用户名 -->
-	<select id="findUsernameByUID" resultType="String">
-		select username from user where uid = #{UID}
-	</select>
-	
 	<!-- 查找帖子详细信息 -->
 	<select id="findThreadByTID" resultType="ThreadPost">
-		select * from thread where t_id = #{TID}
+		select * from thread,user where t_id = #{TID} and thread.t_uid=user.uid
 	</select>
 	
 	<!-- 增加点击量 -->

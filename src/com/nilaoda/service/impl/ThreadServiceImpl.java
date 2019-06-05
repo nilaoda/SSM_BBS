@@ -25,13 +25,6 @@ public class ThreadServiceImpl implements ThreadService
 		return this.threadDao.findThreads();
 	}
 
-	// 查询用户名
-	@Override
-	public String findUsernameByUID(int UID)
-	{
-		return this.threadDao.findUsernameByUID(UID);
-	}
-
 	// 查询帖子正文
 	@Override
 	public ThreadPost findThreadByTID(int TID)

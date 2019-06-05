@@ -36,11 +36,6 @@ public class ThreadController
 		List<ThreadPost> threads = this.threadService.findThreads();
 		if (threads != null)
 		{
-			for (ThreadPost thread : threads)
-			{
-				String userName = this.threadService.findUsernameByUID(thread.getT_uid());
-				thread.setUserName(userName);
-			}
 			// 使新帖子在上面
 			Collections.reverse(threads);
 			// 将List添加到Session
@@ -67,11 +62,6 @@ public class ThreadController
 		List<ThreadPost> threads = this.threadService.searchThread(threadPost);
 		if (threads != null)
 		{
-			for (ThreadPost thread : threads)
-			{
-				String userName = this.threadService.findUsernameByUID(thread.getT_uid());
-				thread.setUserName(userName);
-			}
 			// 使新帖子在上面
 			Collections.reverse(threads);
 			// 将List添加到Session
@@ -92,8 +82,6 @@ public class ThreadController
 		this.threadService.addThreadClickByTID(t_id);
 		// 取出帖子内容
 		ThreadPost threadPost = this.threadService.findThreadByTID(t_id);
-		String userName = this.threadService.findUsernameByUID(threadPost.getT_uid());
-		threadPost.setUserName(userName);
 		session.setAttribute("THREAD_DETAIL", threadPost);
 		return "detail";
 	}
@@ -162,11 +150,6 @@ public class ThreadController
 		List<ThreadPost> threadPosts = this.threadService.findThreadsByUID(uid);
 		if (threadPosts != null)
 		{
-			for (ThreadPost thread : threadPosts)
-			{
-				String userName = this.threadService.findUsernameByUID(thread.getT_uid());
-				thread.setUserName(userName);
-			}
 			// 使新帖子在上面
 			Collections.reverse(threadPosts);
 			// 将List添加到Session
