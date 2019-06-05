@@ -9,7 +9,7 @@
 	
 	<!-- 查找某人发表的所有帖子 -->
 	<select id="findThreadsByUID" parameterType="Integer" resultType="ThreadPost">
-		select * from thread where t_uid = #{UID}
+		select * from thread,user where t_uid = #{UID} and thread.t_uid=user.uid
 	</select>
 	
 	<!-- 查找帖子详细信息 -->
@@ -26,7 +26,7 @@
 	
 	<!-- 搜索帖子 -->
 	<select id="searchThread" resultType="ThreadPost" parameterType="ThreadPost">
-		select * from thread where 1=1
+		select * from thread,user where thread.t_uid=user.uid
 		  <if test="t_title!=null">
             and t_title LIKE CONCAT(CONCAT('%', #{t_title}), '%');
           </if>
